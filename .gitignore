@@ -9,3 +9,4 @@ wheels/
 /tests
 .github
 .python-version
+staticfiles/
