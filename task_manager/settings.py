@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'task_manager.users',
     'task_manager',
     'django_bootstrap5',
 ]
@@ -66,7 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+] 
 
 ROOT_URLCONF = 'task_manager.urls'
 
@@ -93,7 +94,6 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
         default=DB,
         conn_max_age=600
     )
@@ -122,6 +122,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
+
+LOGIN_URL = '/login/'
 
 LANGUAGE_CODE = 'en-us'
 

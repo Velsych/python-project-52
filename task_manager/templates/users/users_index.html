@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+
+{% block main %}
+<div class="container wrapper flex-grow-1">
+      
+
+
+      <h1 class="my-4">
+        
+Пользователи
+
+      </h1>
+      
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Имя пользователя</th>
+      <th>Полное имя</th>
+      <th>Дата создания</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      <tr>
+        <td>Тест1</td>
+        <td>Alsy</td>
+        <td>Alsy sych</td>
+        <td>datetime hd</td>
+        <td>
+          <a href="/users/update/">Изменить</a>
+          <br>
+          <a href="/users/id/delete/">Удалить</a>
+        </td>
+      </tr>
+    
+    
+  </tbody>
+</table>
+
+    </div>
+{% endblock %}

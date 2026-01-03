@@ -28,6 +28,7 @@ render-start:
 	gunicorn task_manager.wsgi
 
 migrate:
+	uv run manage.py makemigrations
 	uv run manage.py migrate
 
 collectstatic:
