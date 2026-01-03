@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% load django_bootstrap5 %}
 
+
 {% block main %}
 <div class="container wrapper flex-grow-1">
       
@@ -8,18 +9,19 @@
 
       <h1 class="my-4">
         
-Регистрация
+Вход
 
       </h1>
+      
 
-    <form action="{% url 'create_user' %}" method="post" class="form">
+<form action="{% url 'login' %}" method="post" class="form">
         {% csrf_token %}
 
         {% bootstrap_form form %}
 
-        {% bootstrap_button button_type="submit" content="Регистрация" %}
-
-    </form>
+        {% bootstrap_button button_type="submit" content="Войти" %}
+</form>
 
     </div>
+
 {% endblock %}
