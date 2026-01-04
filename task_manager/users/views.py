@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin,AccessMixin
-from task_manager.users.forms import UserFrom
+from task_manager.users.forms import UserFrom,User
 
 def index(request):
-    return render(request,'users/users_index.html')
+    users = User.objects.all()
+    return render(request,'users/users_index.html',{'users':users})
 
 
 
@@ -43,10 +44,10 @@ class UsersDeleteView(LoginRequiredMixin,View):
     login_url = '/login/'
     redirect_field_name = 'next'
     def get(self,request,*args,**kwargs):
-        
+        users = User.objects.get(id=kwargs['pk'])
         if int(request.session.get('_auth_user_id')) == kwargs['pk'] or request.user.is_superuser:
             #удалить юзера
-            return render(request,'users/user_delete.html')
+            return render(request,'users/user_delete.html',{'user':users})
         return redirect('index_users')
 
 

@@ -23,19 +23,19 @@
     </tr>
   </thead>
   <tbody>
-    
+    {% for user in users %}
       <tr>
-        <td>Тест1</td>
-        <td>Alsy</td>
-        <td>Alsy sych</td>
-        <td>datetime hd</td>
+        <td>{{user.id}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.first_name}} {{user.last_name}}</td>
+        <td>{{user.date_joined}}</td>
         <td>
-          <a href="/users/2/update/">Изменить</a>
+          <a href="/users/{{user.id}}/update/">Изменить</a>
           <br>
-          <a href="/users/2/delete/">Удалить</a>
+          <a href="/users/{{user.id}}/delete/">Удалить</a>
         </td>
       </tr>
-    
+    {% endfor %}
     
   </tbody>
 </table>
