@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.contrib.auth.mixins import LoginRequiredMixin,AccessMixin
+from django.contrib.auth.mixins import LoginRequiredMixin,AccessMixin,UserPassesTestMixin
 from task_manager.users.forms import UserFrom
 from django.contrib.auth.models import User
 from django.views.generic import CreateView,UpdateView
@@ -13,16 +13,6 @@ def index(request):
 
 
 
-class UserPermissionMixin(AccessMixin):
-    permission_message = ("You don't have the rights to change another user")
-    redirect_url = "index_users"
-
-    def dispatch(self, request, *args, **kwargs):
-        if self.request.user != self.get_object():
-            return redirect(self.redirect_url)           # redirect_url ?
-        return super().dispatch(request, *args, **kwargs)
-
-
 class UsersCreateView(CreateView):
     model = User
     form_class = UserFrom
@@ -31,7 +21,7 @@ class UsersCreateView(CreateView):
 
 
 
-class UsersUpdateView(LoginRequiredMixin, UserPermissionMixin,UpdateView):
+class UsersUpdateView(LoginRequiredMixin, UserPassesTestMixin,UpdateView):
     redirect_field_name = 'next'
     model = User
     form_class = UserFrom
@@ -39,15 +29,24 @@ class UsersUpdateView(LoginRequiredMixin, UserPermissionMixin,UpdateView):
     success_url = reverse_lazy("index_users")
     success_message = ("The user has been successfully updated")
     login_url = reverse_lazy("login")
+    def test_func(self):
+        user_to_delete = self.get_object() 
+        current_user = self.request.user 
+        return user_to_delete == current_user
     # Добавить пост запрос и доделать вывод страницы
 
 
 
-class UsersDeleteView(LoginRequiredMixin, UserPermissionMixin, DeleteView):
+class UsersDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    redirect_field_name = 'next' 
     model = User
     template_name = "users/user_delete.html"
     success_url = reverse_lazy("index")
     permission_message = ("You do not have permission to delete another user.")
     login_url = reverse_lazy("login")
+    def test_func(self):
+        user_to_delete = self.get_object() 
+        current_user = self.request.user 
+        return user_to_delete == current_user
 
 # django.views.generic спросить
