@@ -14,9 +14,8 @@
       </h1>
       
 <p>Вы уверены, что хотите удалить {{user.first_name}} {{user.last_name}}   {{user.id}}</p>
-<form method="post" action="{% url 'delete_user' user.id%}" >
+<form method="post" action="{% url 'delete_user' user.id%}">
     {% csrf_token %}
-
     {% bootstrap_button button_type="submit"  button_class='btn-danger' content="Да, удалить" %}
 </form>
 

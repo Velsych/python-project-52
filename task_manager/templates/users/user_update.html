@@ -1,1 +1,26 @@
 {% extends "layout.html" %}
+{% load django_bootstrap5 %}
+
+
+{% block main %}
+<div class="container wrapper flex-grow-1">
+      
+
+
+      <h1 class="my-4">
+        
+ Изменение пользователя 
+
+      </h1>
+      
+<p>Вы уверены, что хотите удалить {{user.first_name}} {{user.last_name}} </p>
+<form method="post" action="{% url 'user_update' user.id%}" >
+    {% csrf_token %}
+
+    {% bootstrap_form form %}
+
+    {% bootstrap_button button_type="submit"  content="Изменить" %}
+</form>
+
+    </div>
+{% endblock %}

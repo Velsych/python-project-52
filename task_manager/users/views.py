@@ -1,8 +1,11 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin,AccessMixin
-from task_manager.users.forms import UserFrom,User
+from task_manager.users.forms import UserFrom
+from django.contrib.auth.models import User
+from django.views.generic import CreateView,UpdateView
+from django.views.generic.edit import DeleteView
 
 def index(request):
     users = User.objects.all()
@@ -10,46 +13,41 @@ def index(request):
 
 
 
-class UsersCreateView(View):
-    def get(self,request,*args,**kwargs):
-        form = UserFrom()
-        print(request.user.is_anonymous)
-        return render(request,'users/user_create.html',{'form':form})
-    def post(self,request,*args,**kwargs):
-        form = UserFrom(request.POST)
-        if form.is_valid():
-            cleaned_data = form.cleaned_data
-            if cleaned_data['password'] == cleaned_data['temp_pass']:
-                form.save()
-                print(cleaned_data)
-                return redirect('login')
+class UserPermissionMixin(AccessMixin):
+    permission_message = ("You don't have the rights to change another user")
+    redirect_url = "index_users"
 
-        return render(request,'users/user_create.html',{'form':form})
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user != self.get_object():
+            return redirect(self.redirect_url)           # redirect_url ?
+        return super().dispatch(request, *args, **kwargs)
 
 
-class UsersUpdateView(LoginRequiredMixin,View):
-    login_url = '/login/'
+class UsersCreateView(CreateView):
+    model = User
+    form_class = UserFrom
+    template_name = 'users/user_create.html'
+    success_url = reverse_lazy('login')
+
+
+
+class UsersUpdateView(LoginRequiredMixin, UserPermissionMixin,UpdateView):
     redirect_field_name = 'next'
-    def get(self,request,*args,**kwargs):
-        # print(type(request.session.get('_auth_user_id')))
-        # print(kwargs['pk'])
-        # print(request.user.is_superuser)
-        # print(request.session.get('_auth_user_id') == kwargs['pk'])
-        if int(request.session.get('_auth_user_id')) == kwargs['pk'] or request.user.is_superuser:
-            return render(request,'users/user_update.html')
-        return redirect('index_users')
+    model = User
+    form_class = UserFrom
+    template_name = 'users/user_update.html'
+    success_url = reverse_lazy("index_users")
+    success_message = ("The user has been successfully updated")
+    login_url = reverse_lazy("login")
     # Добавить пост запрос и доделать вывод страницы
 
-class UsersDeleteView(LoginRequiredMixin,View):
-    login_url = '/login/'
-    redirect_field_name = 'next'
-    def get(self,request,*args,**kwargs):
-        users = User.objects.get(id=kwargs['pk'])
-        if int(request.session.get('_auth_user_id')) == kwargs['pk'] or request.user.is_superuser:
-            #удалить юзера
-            return render(request,'users/user_delete.html',{'user':users})
-        return redirect('index_users')
 
 
+class UsersDeleteView(LoginRequiredMixin, UserPermissionMixin, DeleteView):
+    model = User
+    template_name = "users/user_delete.html"
+    success_url = reverse_lazy("index")
+    permission_message = ("You do not have permission to delete another user.")
+    login_url = reverse_lazy("login")
 
 # django.views.generic спросить
