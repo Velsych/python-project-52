@@ -9,12 +9,12 @@
 
       <h1 class="my-4">
         
- Изменение пользователя 
+ Изменение статуса
 
       </h1>
       
 
-<form method="post" action="{% url 'user_update' user.id%}" >
+<form method="post" action="{% url 'status_update' status.id%}" >
     {% csrf_token %}
 
     {% bootstrap_form form %}

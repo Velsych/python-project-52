@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class LogInForm(forms.ModelForm):
-    class Meta(User):
+    class Meta():
         model = User
         fields = ["username", "password"]
         labels = {
