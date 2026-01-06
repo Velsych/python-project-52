@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.views import View
 from task_manager.forms import LogInForm
@@ -23,6 +24,10 @@ class LogIn(View):
         user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
+            messages.success(request, ("Вы вошли"))
             return redirect('index')
         else:
+            messages.error(
+                request, ("ПОправь пароль")
+            )
             return render(request,'index.html')
