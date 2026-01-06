@@ -48,5 +48,11 @@ class UsersDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         user_to_delete = self.get_object() 
         current_user = self.request.user 
         return user_to_delete == current_user
+    
+
+# def handle_no_permission(self):
+#     """Обработка случая, когда пользователь не автор"""
+#     messages.error(self.request, _("Only the author can delete a task"))
+#     return redirect("tasks:tasks")
 
 # django.views.generic спросить

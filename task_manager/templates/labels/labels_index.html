@@ -9,7 +9,7 @@
 
       <h1 class="my-4">
         
-Статусы
+Метки
 
       </h1>
           {% bootstrap_button button_type="link" content="Создать новый" href="/labels/create" %}
@@ -23,15 +23,15 @@
     </tr>
   </thead>
   <tbody>
-    {% for status in statuses %}
+    {% for label in labels %}
       <tr>
-        <td>{{status.id}}</td>
-        <td>{{status.name}}</td>
-        <td>{{status.created_at|date:"d.m.Y H:i"}}</td>
+        <td>{{label.id}}</td>
+        <td>{{label.name}}</td>
+        <td>{{label.created_at|date:"d.m.Y H:i"}}</td>
         <td>
-          <a href="/statuses/{{status.id}}/update/">Изменить</a>
+          <a href="/labels/{{label.id}}/update/">Изменить</a>
           <br>
-          <a href="/statuses/{{status.id}}/delete/">Удалить</a>
+          <a href="/labels/{{label.id}}/delete/">Удалить</a>
         </td>
       </tr>
     {% endfor %}

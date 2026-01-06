@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% load django_bootstrap5 %}
+
+
+{% block main %}
+<div class="container wrapper flex-grow-1">
+      
+
+
+      <h1 class="my-4">
+        
+Удаление пользователя
+
+      </h1>
+      
+<p>Вы уверены, что хотите удалить {{task.name}} </p>
+<form method="post" action="{% url 'delete_task' task.id%}">
+    {% csrf_token %}
+    {% bootstrap_button button_type="submit"  button_class='btn-danger' content="Да, удалить" %}
+</form>
+
+    </div>
+{% endblock %}
