@@ -17,7 +17,7 @@ class TaskForm(forms.ModelForm):
             "description": forms.Textarea(attrs={"class": "form-control","placeholder": ("Описание"),"rows": 4,}),
             "status": forms.Select(attrs={"class": "form-control"}),
             "executor": forms.Select(attrs={"class": "form-control"}),
-            "labels": forms.Select(attrs={"class": "form-control"}),} # selectMultiple не работает
+            "labels": forms.SelectMultiple(attrs={"class": "form-control"}),} # selectMultiple не работает
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
