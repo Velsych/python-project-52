@@ -9,16 +9,47 @@
 
       <h1 class="my-4">
         
-Статусы
+Задачи
 
       </h1>
           {% bootstrap_button button_type="link" content="Создать задачу" href="/tasks/create" %}
           <div class="card-body bg-light">
     <form class="form-inline center" method="get">
-      <div class="mb-3">
-        ЗДЕСЬ ДОЛЖЕН БЫТЬ ФИЛЬТР НО Я ЛЕНИВАЯ СУКА
-</div>
-      <div class="mb-3"><div class="form-check"><input type="checkbox" name="self_tasks" class="form-check-input mr-3" id="id_self_tasks"><label class="form-check-label" for="id_self_tasks">Только свои задачи</label></div></div>
+      <div class="card mb-4">
+                <div class="card-body bg-light">
+                        <div class="col-md-3">
+                            <div class="form-group filter-status"> 
+                               <label for="id_status" class="filter-label">Статус</label> 
+                               {{ filter.form.status }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group filter-executor"> 
+                                <label for="id_executor" class="filter-label">Исполнитель</label> 
+                                {{ filter.form.executor }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group filter-labels"> 
+                                <label for="id_labels" class="filter-label">Метка</label> 
+                                {{ filter.form.labels }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check">
+                               <label class="form-check-label" for="{{ filter.form.self_tasks.auto_id }}">
+                                   {{ filter.form.self_tasks.label }}
+                                   {{ filter.form.self_tasks }}
+                               </label>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Фильтр</button>
+                            <a href="{% url 'index_tasks' %}" class="btn btn-outline-secondary">Сброс</a>
+                        </div>
+                </div>
+            </div>
         <input class="btn btn-primary" type="submit" value="Показать">
     </form>
   </div>

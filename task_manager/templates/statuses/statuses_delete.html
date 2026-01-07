@@ -9,11 +9,11 @@
 
       <h1 class="my-4">
         
-Удаление пользователя
+Удаление статуса
 
       </h1>
       
-<p>Вы уверены, что хотите удалить {{status.name}} </p>
+<p>Вы уверены, что хотите удалить {{status.name}}? </p>
 <form method="post" action="{% url 'delete_status' status.id%}">
     {% csrf_token %}
     {% bootstrap_button button_type="submit"  button_class='btn-danger' content="Да, удалить" %}

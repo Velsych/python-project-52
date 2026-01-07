@@ -1,7 +1,6 @@
 from django import forms
 from .models import Task,User,Status,Label
 from django.core.exceptions import ValidationError
-from django.db import models
 
 
 class TaskForm(forms.ModelForm):
@@ -17,7 +16,7 @@ class TaskForm(forms.ModelForm):
             "description": forms.Textarea(attrs={"class": "form-control","placeholder": ("Описание"),"rows": 4,}),
             "status": forms.Select(attrs={"class": "form-control"}),
             "executor": forms.Select(attrs={"class": "form-control"}),
-            "labels": forms.SelectMultiple(attrs={"class": "form-control"}),} # selectMultiple не работает
+            "labels": forms.SelectMultiple(attrs={"class": "form-control"}),}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -29,7 +28,6 @@ class TaskForm(forms.ModelForm):
         self.fields["labels"].required = False
 
     def clean_name(self):
-        """Валидация имени задачи"""
         name = self.cleaned_data.get("name")
         if len(name) < 2:
             raise ValidationError(

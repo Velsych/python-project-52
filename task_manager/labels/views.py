@@ -5,7 +5,7 @@ from .models import Label
 from task_manager.labels.forms import LabelFrom
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView,UpdateView
 from django.views.generic.edit import DeleteView
 from django.views import View

@@ -1,21 +1,28 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from .models import Task
+from .filters import TaskFilter
 from django.contrib import messages
 from task_manager.tasks.forms import TaskForm
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic import CreateView,UpdateView,DetailView
+from django_filters.views import FilterView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import DeleteView
-from django.views import View
 
 
-class TaskIndex(LoginRequiredMixin,View):
-    login_url = reverse_lazy("login")
-    def get(self,request):
-        tasks = Task.objects.all().order_by('id')
-        return render(request,'tasks/tasks_index.html',{'tasks':tasks})
+class TasksListView(LoginRequiredMixin, FilterView):
+    model = Task
+    template_name = "tasks/tasks_index.html"
+    context_object_name = "tasks"
+    filterset_class = TaskFilter
+    ordering = ["-created_at"]
+
+    def get_queryset(self):
+        tasks = super().get_queryset()
+        return tasks.select_related(
+            "status", "author", "executor"
+        ).prefetch_related("labels")
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
@@ -55,11 +62,9 @@ class TaskDeleteView(LoginRequiredMixin,UserPassesTestMixin, SuccessMessageMixin
     success_message = ("Таска успешно удалена!")
     login_url = reverse_lazy("login")
     def test_func(self):
-        user_to_delete = self.get_object()
-        print(user_to_delete.author) 
+        task_to_delete = self.get_object()
         current_user = self.request.user 
-        print(current_user)
-        return user_to_delete.author == current_user
+        return task_to_delete.author == current_user
     def handle_no_permission(self):
         messages.error(self.request, ("Только сам автор может её удалить!"))
         return redirect("index_tasks")

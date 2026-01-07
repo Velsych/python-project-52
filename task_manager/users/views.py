@@ -15,7 +15,7 @@ def index(request):
 
 
 
-class UsersCreateView(CreateView,SuccessMessageMixin):
+class UsersCreateView(SuccessMessageMixin,CreateView):
     model = User
     form_class = UserFrom
     template_name = 'users/user_create.html'

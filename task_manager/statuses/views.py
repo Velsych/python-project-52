@@ -5,7 +5,7 @@ from .models import Status
 from django.contrib import messages
 from task_manager.statuses.forms import StatusFrom
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView,UpdateView
 from django.views.generic.edit import DeleteView
 from django.views import View
