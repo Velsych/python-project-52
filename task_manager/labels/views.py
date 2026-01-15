@@ -6,16 +6,16 @@ from task_manager.labels.forms import LabelFrom
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView,UpdateView
+from django.views.generic import CreateView,UpdateView,ListView
 from django.views.generic.edit import DeleteView
 from django.views import View
 
 
-class LabelIndex(LoginRequiredMixin,View):
+class LabelIndex(LoginRequiredMixin,ListView):
     login_url = reverse_lazy("login")
-    def get(self,request):
-        labels = Label.objects.all().order_by('id')
-        return render(request,'labels/labels_index.html',{'labels':labels})
+    model = Label
+    template_name = 'labels/labels_index.html'
+    context_object_name = 'labels'
 
 
 

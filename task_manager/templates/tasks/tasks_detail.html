@@ -39,9 +39,9 @@
       </div>
       <div class="row p-1">
         <div class="col">
-          <a href="/tasks/{{task.id}}/update/">Изменить</a>
+          <a href="{% url 'task_update' task.id%}">Изменить</a>
           <br>
-          <a href="/tasks/{{task.id}}/delete/">Удалить</a>
+          <a href="{% url 'delete_task' task.id%}">Удалить</a>
         </div>
       </div>
     </div>

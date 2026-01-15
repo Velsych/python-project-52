@@ -6,16 +6,16 @@ from django.contrib import messages
 from task_manager.statuses.forms import StatusFrom
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView,UpdateView
+from django.views.generic import CreateView,UpdateView,ListView
 from django.views.generic.edit import DeleteView
 from django.views import View
 
 
-class StatusIndex(LoginRequiredMixin,View):
+class StatusIndex(LoginRequiredMixin,ListView):
     login_url = reverse_lazy("login")
-    def get(self,request):
-        statuses = Status.objects.all().order_by('id')
-        return render(request,'statuses/statuses_index.html',{'statuses':statuses})
+    model = Status
+    template_name = 'statuses/statuses_index.html'
+    context_object_name = 'statuses'
 
 
 

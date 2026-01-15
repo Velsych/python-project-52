@@ -6,12 +6,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from task_manager.users.forms import UserFrom
 from django.contrib.auth.models import User
-from django.views.generic import CreateView,UpdateView
+from django.views.generic import CreateView,UpdateView,ListView
 from django.views.generic.edit import DeleteView
 
-def index(request):
-    users = User.objects.all().order_by('id')
-    return render(request,'users/users_index.html',{'users':users})
+
+class UsersList(ListView):
+    model = User
+    template_name = 'users/users_index.html'
 
 
 
