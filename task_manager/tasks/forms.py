@@ -7,12 +7,12 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ["name", "description", "status", "executor", "labels"]
-        labels = {'name':'Название',
+        labels = {'name':'Имя',
                   'description':'Описание',
                   'status':'Статус',
                   'executor':'Исполнитель',
                   'labels':'Метки'}
-        widgets = {"name": forms.TextInput(attrs={"class": "form-control", "placeholder": ("Название")}),
+        widgets = {"name": forms.TextInput(attrs={"class": "form-control", "placeholder": ("Имя")}),
             "description": forms.Textarea(attrs={"class": "form-control","placeholder": ("Описание"),"rows": 4,}),
             "status": forms.Select(attrs={"class": "form-control"}),
             "executor": forms.Select(attrs={"class": "form-control"}),
