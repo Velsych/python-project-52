@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from .models import Label
@@ -8,7 +7,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView,UpdateView,ListView
 from django.views.generic.edit import DeleteView
-from django.views import View
 
 
 class LabelIndex(LoginRequiredMixin,ListView):
