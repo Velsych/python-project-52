@@ -10,6 +10,7 @@ def index(request):
 
 def user_logout(request):
     logout(request)
+    messages.success(request, ("Вы разлогинены"))
     return redirect('index')
 
 
@@ -24,7 +25,7 @@ class LogIn(View):
         user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
-            messages.success(request, ("Вы вошли"))
+            messages.success(request, ("Вы залогинены"))
             return redirect('index')
         else:
             messages.error(

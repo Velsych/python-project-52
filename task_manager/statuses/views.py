@@ -33,7 +33,7 @@ class StatusUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
     form_class = StatusFrom
     template_name = 'statuses/statuses_update.html'
     success_url = reverse_lazy("index_statuses")
-    success_message = ("Статус успешно обновлён")
+    success_message = ("Статус успешно изменен")
     login_url = reverse_lazy("login")
 
     
@@ -44,12 +44,12 @@ class StatusDeleteView(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
     model = Status
     template_name = "statuses/statuses_delete.html"
     success_url = reverse_lazy("index_statuses")
-    success_message = ("Статус успешно удалён")
+    success_message = ("Статус успешно удален")
     login_url = reverse_lazy("login")
     def post(self, request, *args, **kwargs):
         status_to_delete  = self.get_object()
         if status_to_delete.status.all().exists():
-            messages.error(self.request, ("На нём есть созданная таска!"))
+            messages.error(self.request, ("Невозможно удалить статус"))
             return redirect("index_statuses")
         else:
             return super().post(self, request, *args, **kwargs)
