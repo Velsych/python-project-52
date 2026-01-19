@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from task_manager.users.forms import UserFrom
+from task_manager.users.forms import UserForm,UserUpdateForm
 from django.contrib.auth.models import User
 from django.views.generic import CreateView,UpdateView,ListView
 from django.views.generic.edit import DeleteView
@@ -18,7 +18,7 @@ class UsersList(ListView):
 
 class UsersCreateView(SuccessMessageMixin,CreateView):
     model = User
-    form_class = UserFrom
+    form_class = UserForm
     template_name = 'users/user_create.html'
     success_message = ("Юзер зарегистрирован")
     success_url = reverse_lazy('login')
@@ -28,7 +28,7 @@ class UsersCreateView(SuccessMessageMixin,CreateView):
 class UsersUpdateView(LoginRequiredMixin, UserPassesTestMixin,SuccessMessageMixin,UpdateView):
     redirect_field_name = 'next'
     model = User
-    form_class = UserFrom
+    form_class = UserUpdateForm
     template_name = 'users/user_update.html'
     success_url = reverse_lazy("index_users")
     success_message = ("Юзер обновлён")
