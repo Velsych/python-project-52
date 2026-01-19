@@ -7,6 +7,19 @@ from django.contrib.auth import get_user_model
 
 
 class UserForm(UserCreationForm):
+    password1 = forms.CharField(
+        widget=forms.PasswordInput,
+        required=False,
+        label='Пароль',
+        help_text='Ваш пароль должен содержать как минимум 3 символа.'
+    )
+    
+    password2 = forms.CharField(
+        widget=forms.PasswordInput,
+        required=False,
+        label='Подтверждение пароля',
+        help_text='Для подтверждения введите, пожалуйста, пароль ещё раз.'
+    )
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["first_name"].required = True
@@ -14,13 +27,19 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = [
-            "first_name",
-            "last_name",
-            "username",
-            "password1",
-            "password2",
-        ]
+        fields = ["first_name", "last_name", "username", "password1",'password2']
+        labels = {
+        'first_name': 'Имя',
+        'last_name': 'Фамилия',
+        'username': 'Имя пользователя',
+        'password1': 'Пароль',
+        'password2': 'Подтверждение пароля'
+    }
+        help_texts = {
+        'username': 'Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.',
+        'password1': 'Ваш пароль должен содержать как минимум 3 символа.',
+        'password2': 'Для подтверждения введите, пожалуйста, пароль ещё раз.'
+    }
 
 
 class UserUpdateForm(UserForm):
