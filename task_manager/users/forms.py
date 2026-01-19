@@ -63,7 +63,7 @@ class UserFrom(forms.ModelForm):
         'first_name': 'Имя',
         'last_name': 'Фамилия',
         'username': 'Имя пользователя',
-        'password': 'Пароль'
+        'password1': 'Пароль'
     }
         help_texts = {
         'username': 'Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.',
