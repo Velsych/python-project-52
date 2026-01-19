@@ -1,8 +1,7 @@
 from django import forms
-from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
-
+from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 
 
 class UserForm(UserCreationForm):
@@ -19,6 +18,7 @@ class UserForm(UserCreationForm):
         label='Подтверждение пароля',
         help_text='Для подтверждения введите, пожалуйста, пароль ещё раз.'
     )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["first_name"].required = True
@@ -26,7 +26,8 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ["first_name", "last_name", "username", "password1",'password2']
+        fields = ["first_name", "last_name", "username",
+                   "password1", 'password2']
         labels = {
         'first_name': 'Имя',
         'last_name': 'Фамилия',
@@ -35,7 +36,8 @@ class UserForm(UserCreationForm):
         'password2': 'Подтверждение пароля'
     }
         help_texts = {
-        'username': 'Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.',
+        'username': '''Обязательное поле. Не более 150 символов.
+          Только буквы, цифры и символы @/./+/-/_.''',
         'password1': 'Ваш пароль должен содержать как минимум 3 символа.',
         'password2': 'Для подтверждения введите, пожалуйста, пароль ещё раз.'
     }

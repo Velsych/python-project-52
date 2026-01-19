@@ -17,11 +17,14 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='task',
             name='executor',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='executioner', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(blank=True, null=True,
+        on_delete=django.db.models.deletion.PROTECT, 
+        related_name='executioner', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='task',
             name='status',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='status', to='statuses.status'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, 
+                    related_name='status', to='statuses.status'),
         ),
     ]
