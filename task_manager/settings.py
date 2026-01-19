@@ -17,7 +17,7 @@ import os
 
 load_dotenv()
 
-POSTGRESQL = os.getenv('DB')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = os.getenv("DEBUG") == "True"
-DATABASE_URL = os.getenv('DATABASE_URL')
+DB = os.getenv('DATABASE_URL')
 
 
 ALLOWED_HOSTS = ["webserver"
@@ -97,27 +97,13 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=DB,
-#         conn_max_age=600
-#     )
-# }
-
-
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
-if os.environ.get("DATABASE_URL"):
-    db_from_env = dj_database_url.config(
-        default=DATABASE_URL,
+    'default': dj_database_url.config(
+        default=DB,
         conn_max_age=600
     )
-    DATABASES["default"].update(db_from_env)
+}
+
 
 
 # Password validation

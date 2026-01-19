@@ -13,7 +13,7 @@ from django.views.generic.edit import DeleteView
 class UsersList(ListView):
     model = User
     template_name = 'users/users_index.html'
-
+    
 
 
 class UsersCreateView(SuccessMessageMixin,CreateView):
