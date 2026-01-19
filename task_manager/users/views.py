@@ -48,7 +48,7 @@ class UsersDeleteView(LoginRequiredMixin, UserPassesTestMixin,SuccessMessageMixi
     redirect_field_name = 'next' 
     model = User
     template_name = "users/user_delete.html"
-    success_url = reverse_lazy("index")
+    success_url = reverse_lazy("index_users")
     success_message = ("Пользователь успешно удален")
     login_url = reverse_lazy("login")
     def post(self, request, *args, **kwargs):
