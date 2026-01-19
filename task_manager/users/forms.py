@@ -4,14 +4,14 @@ from django.core.exceptions import ValidationError
 
 
 class UserFrom(forms.ModelForm):
-    password = forms.CharField(
+    password1 = forms.CharField(
         widget=forms.PasswordInput,
         required=False,
         label='Пароль',
         help_text='Ваш пароль должен содержать как минимум 3 символа.'
     )
     
-    temp_pass = forms.CharField(
+    password2 = forms.CharField(
         widget=forms.PasswordInput,
         required=False,
         label='Подтверждение пароля',
@@ -22,11 +22,11 @@ class UserFrom(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Делаем поля необязательными при редактировании
         if self.instance.pk:
-            self.fields['password'].required = False
-            self.fields['temp_pass'].required = False
+            self.fields['password1'].required = False
+            self.fields['password2'].required = False
 
     def clean_password(self):
-        password1 = self.cleaned_data.get("password")
+        password1 = self.cleaned_data.get("password1")
         if self.instance.pk and not password1:
             return password1
 
@@ -36,22 +36,22 @@ class UserFrom(forms.ModelForm):
             )
         return password1
 
-    def clean_temp_pass(self):
-        password = self.cleaned_data.get("password")
-        temp_pass = self.cleaned_data.get("temp_pass")
-        if self.instance.pk and not password and not temp_pass:
-            return temp_pass
-        if password != temp_pass:
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if self.instance.pk and not password1 and not password2:
+            return password2
+        if password1 != password2:
             raise ValidationError(("The entered passwords do not match."))
-        return temp_pass
+        return password2
     def save(self, commit=True):
         user = super().save(commit=False)
-        password = self.cleaned_data.get("password")
-        if self.instance.pk and not password:
+        password1 = self.cleaned_data.get("password1")
+        if self.instance.pk and not password1:
             current_user = User.objects.get(pk=self.instance.pk)
-            user.password = current_user.password
+            user.password1 = current_user.password1
         else:
-            user.set_password(password)
+            user.set_password(password1)
 
         if commit:
             user.save()
