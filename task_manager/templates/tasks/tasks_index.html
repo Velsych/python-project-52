@@ -72,7 +72,7 @@
         <td><a href="/tasks/{{task.id}}">{{task.name}}</a></td>
         <td>{{task.status}}</td>
         <td>{{task.author}}</td>
-        <td>{{task.executor.get_full_name|default:task.executor.username|default:"—"}}</td>
+        <td>{{task.executor.get_full_name.title|default:task.executor.username|default:"—"}}</td>
         <td>{{task.created_at|date:"d.m.Y H:i"}}</td>
         <td>
           <a href="/tasks/{{task.id}}/update/">Изменить</a>
